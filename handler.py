@@ -8,14 +8,14 @@ size = int(os.environ['THUMBNAIL_SIZE'])
 
 
 def s3_thumbnail_generator(event, context):
-    # fetching event
+    # fetching event object
     print(event)
-    # get the bucket name and key
+    # get the bucket name and the key
     bucket = event['Records'][0]['s3']['bucket']['name']
     key = event['Records'][0]['s3']['object']['key']
-    # only create a thumbnail on non thumbnail pictures
+    # only create a thumbnail on non thumbnail pictures suffix
     if (not key.endswith("_thumbnail.png")):
-        # get the image
+        # get the image uploaded
         image = get_s3_image(bucket, key)
         # resize the image
         thumbnail = image_to_thumbnail(image)
