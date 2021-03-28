@@ -1,10 +1,12 @@
 
-Please install the following plugin before running the code:
+1. Please install the following plugin before running the code:
 https://github.com/UnitedIncome/serverless-python-requirements
 
 ```
 npm install --save serverless-python-requirements
 ```
+2. Run npm install to get all the library dependencies
+
 PROJECT OUTLINE:
 
 --> Created a service using lambda which generates image thumbnails when an image is uploaded to S3.
