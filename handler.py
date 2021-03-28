@@ -3,9 +3,9 @@ import cStringIO
 from PIL import Image, ImageOps
 import os
 
+# boto3 SDK to access AWS resources
 s3 = boto3.client('s3')
 size = int(os.environ['THUMBNAIL_SIZE'])
-
 
 def s3_thumbnail_generator(event, context):
     # fetching event object
@@ -13,15 +13,15 @@ def s3_thumbnail_generator(event, context):
     # get the bucket name and the key
     bucket = event['Records'][0]['s3']['bucket']['name']
     key = event['Records'][0]['s3']['object']['key']
-    # only create a thumbnail on non thumbnail pictures suffix
+    # only create a thumbnail on non thumbnail pictures
     if (not key.endswith("_thumbnail.png")):
-        # get the image uploaded
+        # receive the image uploaded
         image = get_s3_image(bucket, key)
         # resize the image
         thumbnail = image_to_thumbnail(image)
-        # get the new filename
+        # generate the new filename
         thumbnail_key = new_filename(key)
-        # upload the file
+        # upload the created thumbnail to S3
         url = upload_to_s3(bucket, thumbnail_key, thumbnail)
         return url
 
